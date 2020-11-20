@@ -19,31 +19,24 @@
 				name: "Vinit",
 				age: 21
 			}
-
-			// we need arrow function to use this keyword in it....
-			increaseAge = (e) => {
-				let age = this.state.age + 1;
+			handleChange = (e) => {
 				this.setState({
-					age: age
+					name: e.target.value
 				});
 			}
-			decreaseAge = (e) => {
-				let age = this.state.age - 1;
-				age = (age < 0) ? 0 : age;
-				this.setState({
-					age: age
-				});
-			}
-			handleCopy = (e) => {
-				console.log("Don't copy...");
+			handleSubmit = (e) => {
+				// to prevent default behavior of refreshing the page on submit
+				e.preventDefault();
+				console.log('form submitted', this.state.name);
 			}
 			render() {
 				return (
 					<div className="app-content">
-						<h1>Hey guyz...</h1>
-						<p onCopy={this.handleCopy}>My name is {this.state.name}, and my age is {this.state.age}</p>
-						<button onClick={this.increaseAge}>Increase Age</button>
-						<button onClick={this.decreaseAge}>Decrease Age</button>
+						<h1>My name is { this.state.name }</h1>
+						<form onSubmit={ this.handleSubmit }>
+							<input type="text" onChange={ this.handleChange }/>
+							<button>Submit</button>
+						</form>
 					</div>
 				)
 			}
