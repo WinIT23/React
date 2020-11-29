@@ -13,6 +13,9 @@ class AddNinja extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        document.getElementById('name').value = '';
+        document.getElementById('age').value = '';
+        document.getElementById('belt').value = '';
         this.props.addNinja(this.state);
     }
 

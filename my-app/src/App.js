@@ -18,20 +18,25 @@ class App extends Component {
     this.setState({
       id: this.state.id + 1,
       ninjas: newNinjas
-    }, () => {
-        console.log(this.state.ninjas);
     });
   }
   deleteNinja = (id) => {
     let ninjas = this.state.ninjas.filter(ninja => {
       return ninja.id !== id
     });
-    console.log(id);
     this.setState({
       ninjas: ninjas
     });
   }
+  componentDidMount() {
+    console.log("component mount");
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log(`Component Updated :`);
+    console.log( prevProps );
+    console.log( prevState );
+  }
   render() {
     return (
       <div className="App">
