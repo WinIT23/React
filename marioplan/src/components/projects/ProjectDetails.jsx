@@ -1,21 +1,58 @@
-import React from 'react'
+import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 const ProjectDetails = (props) => {
-  const id = props.match.params.id;
-  return (
-    <div className="container section project-details">
-      <div className="card z-depth-1">
-        <div className="card-content">
-          <span className="card-title">Title - {id}</span>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque quia, delectus maiores debitis ullam aspernatur quod suscipit exercitationem non, facilis atque quas repudiandae! Ullam veritatis esse accusantium voluptas quae labore</p>
-        </div>
-        <div className="card-action grey lighten-4 grey-text">
-          <div>Posted by Vinit Chauhan</div>
-          <div>14th June, 4PM</div>
+  const { project } = props;
+  console.log(project);
+  if (project) {
+    return (
+      <div className="container section project-details">
+        <div className="card z-depth-1">
+          <div className="card-content">
+            <span className="card-title">{project.title}</span>
+            <p>{project.content}</p>
+          </div>
+          <div className="card-action grey lighten-4 grey-text">
+            <div>Posted by {project.autherFirstName} {project.autherLastName}</div>
+            <div>{formatDateTime(project.createdAt.seconds)}</div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    )
+  } else {
+    return (
+      <div className="container center">
+        <p>Loading...</p>
+      </div>
+    )
+  }
 }
 
-export default ProjectDetails;
+function formatDateTime(input) {
+  var epoch = new Date(0);
+  epoch.setSeconds(parseInt(input));
+  var date = epoch.toISOString();
+  console.log(date);
+  date = date.replace('T', ' ');
+  console.log(date);
+  console.log(epoch.toLocaleTimeString());
+  return date.split('.')[0].split(' ')[0] + ' ' + epoch.toLocaleTimeString();
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.id;
+  const projects = state.firestore.data.projects;
+  const project = projects ? projects[id] : null;
+  return {
+    project: project
+  }
+};
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([
+    { collection: 'projects' }
+  ])
+)(ProjectDetails);
