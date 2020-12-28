@@ -5,7 +5,6 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 const ProjectDetails = (props) => {
   const { project } = props;
-  console.log(project);
   if (project) {
     return (
       <div className="container section project-details">
@@ -34,10 +33,7 @@ function formatDateTime(input) {
   var epoch = new Date(0);
   epoch.setSeconds(parseInt(input));
   var date = epoch.toISOString();
-  console.log(date);
   date = date.replace('T', ' ');
-  console.log(date);
-  console.log(epoch.toLocaleTimeString());
   return date.split('.')[0].split(' ')[0] + ' ' + epoch.toLocaleTimeString();
 };
 
