@@ -1,5 +1,6 @@
 import React from 'react';
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
