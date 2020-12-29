@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/database';
 import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
 import { Provider, useSelector } from 'react-redux';
