@@ -3,10 +3,10 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import thunk from 'redux-thunk';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { getFirestore, reduxFirestore, createFirestoreInstance } from 'redux-firestore';
-import { getFirebase, ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { getFirebase, isLoaded, ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import './index.css';
 import App from './App';
 import firebaseConfig from './config/firebaseConfig';
@@ -30,10 +30,18 @@ const rrfProps = {
   createFirestoreInstance
 }
 
+function AuthIsLoaded({ children }) {
+  const auth = useSelector((state) => state.firebase.auth)
+  if (!isLoaded(auth)) return <div className="center">loading...</div>;
+  return children;
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <App />
+      <AuthIsLoaded>
+        <App />
+      </AuthIsLoaded>
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById('root')
