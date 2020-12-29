@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 const ProjectSummery = ({ project }) => {
   return(
@@ -7,18 +8,10 @@ const ProjectSummery = ({ project }) => {
         <span className="card-title">{project.title}</span>
         <p>{project.content}</p>
         <p>Posted by {project.autherFirstName} {project.autherLastName} </p>
-        <p className="grey-text">{formatDateTime(project.createdAt.seconds)}</p>
+        <p className="grey-text">{ moment(project.createdAt.toDate()).calendar() }</p>
       </div>
     </div>
   );
 }
-
-function formatDateTime(input) {
-  var epoch = new Date(0);
-  epoch.setSeconds(parseInt(input));
-  var date = epoch.toISOString();
-  date = date.replace('T', ' ');
-  return date.split('.')[0].split(' ')[0] + ' ' + epoch.toLocaleTimeString();
-};
 
 export default ProjectSummery;

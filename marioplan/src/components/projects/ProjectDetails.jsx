@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -17,7 +18,7 @@ const ProjectDetails = (props) => {
           </div>
           <div className="card-action grey lighten-4 grey-text">
             <div>Posted by {project.autherFirstName} {project.autherLastName}</div>
-            <div>{formatDateTime(project.createdAt.seconds)}</div>
+            <div>{ moment(project.createdAt.toDate()).calendar() }</div>
           </div>
         </div>
       </div>
@@ -30,14 +31,6 @@ const ProjectDetails = (props) => {
     )
   }
 }
-
-function formatDateTime(input) {
-  var epoch = new Date(0);
-  epoch.setSeconds(parseInt(input));
-  var date = epoch.toISOString();
-  date = date.replace('T', ' ');
-  return date.split('.')[0].split(' ')[0] + ' ' + epoch.toLocaleTimeString();
-};
 
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
