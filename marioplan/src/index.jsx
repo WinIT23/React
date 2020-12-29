@@ -22,7 +22,10 @@ const store = createStore(
   )
 );
 
-const rrfConfig = { userProfile: 'users' }
+const rrfConfig = { 
+  userProfile: 'users',
+  useFirestoreForProfile: true 
+}
 
 const rrfProps = {
   firebase,
@@ -33,7 +36,7 @@ const rrfProps = {
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector((state) => state.firebase.auth)
-  if (!isLoaded(auth)) return <div className="center">loading...</div>;
+  if (!isLoaded(auth)) return <div className="center"><h4>loading...</h4></div>;
   return children;
 }
 
